@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ShieldCheck, RefreshCw, AlertTriangle, ChevronRight, UserCheck } from 'lucide-react';
+import { ShieldCheck, RefreshCw, AlertTriangle, UserCheck, LogIn } from 'lucide-react';
 
 interface HeaderProps {
   userName: string;
@@ -10,6 +10,7 @@ interface HeaderProps {
   dailyPnl: number;
   maxDrawdownPct: number;
   onResetSeed: () => void;
+  onOpenAuthModal: () => void;
   isResetting?: boolean;
 }
 
@@ -20,6 +21,7 @@ export const Header: React.FC<HeaderProps> = ({
   dailyPnl,
   maxDrawdownPct,
   onResetSeed,
+  onOpenAuthModal,
   isResetting = false,
 }) => {
   const isPnlPositive = dailyPnl >= 0;
@@ -36,12 +38,12 @@ export const Header: React.FC<HeaderProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <span className="font-semibold text-fin-charcoal tracking-tight text-base">Trade-Guard</span>
-              <span className="text-xs bg-surface-subtle text-fin-muted px-2 py-0.5 rounded border border-border-subtle font-medium">Safety System</span>
+              <span className="text-xs bg-surface-subtle text-fin-muted px-2 py-0.5 rounded border border-border-subtle font-medium">Financial Safety</span>
             </div>
             <p className="text-xs text-fin-muted flex items-center gap-1">
               <span>{portfolioName}</span>
               <span className="text-border-strong">•</span>
-              <span className="text-fin-body font-medium">{userName}</span>
+              <span className="text-fin-body font-semibold">{userName}</span>
             </p>
           </div>
         </div>
@@ -74,7 +76,17 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          {/* Login / Account Button */}
+          <button
+            onClick={onOpenAuthModal}
+            className="fin-badge bg-fin-charcoal hover:bg-slate-800 text-surface transition-all cursor-pointer text-xs font-semibold px-3 py-1.5 flex items-center gap-1.5 shadow-fin-sm"
+          >
+            <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Sign In / Auth</span>
+          </button>
+
+          {/* Reset Demo Data */}
           <button
             onClick={onResetSeed}
             disabled={isResetting}
@@ -82,7 +94,7 @@ export const Header: React.FC<HeaderProps> = ({
             title="Reset synthetic trade history to default demo state"
           >
             <RefreshCw className={`w-3.5 h-3.5 text-fin-muted ${isResetting ? 'animate-spin' : ''}`} />
-            <span>{isResetting ? 'Resetting...' : 'Reset Demo Data'}</span>
+            <span className="hidden sm:inline">{isResetting ? 'Resetting...' : 'Reset Data'}</span>
           </button>
         </div>
 

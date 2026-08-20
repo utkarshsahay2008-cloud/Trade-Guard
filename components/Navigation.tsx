@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { LayoutDashboard, ShieldAlert, Sliders, Dna, BookOpen } from 'lucide-react';
+import { LayoutDashboard, ShieldAlert, Sliders, Dna, BookOpen, TrendingUp } from 'lucide-react';
 
-export type ActiveTab = 'dashboard' | 'analyzer' | 'whatif' | 'behavioral' | 'journal';
+export type ActiveTab = 'dashboard' | 'analyzer' | 'predictor' | 'whatif' | 'behavioral' | 'journal';
 
 interface NavigationProps {
   activeTab: ActiveTab;
@@ -19,7 +19,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   const tabs = [
     {
       id: 'dashboard' as ActiveTab,
-      label: 'Portfolio & Risk Overview',
+      label: 'Portfolio Overview',
       icon: LayoutDashboard,
       badge: activeRiskCount > 0 ? `${activeRiskCount} Alerts` : undefined,
       badgeColor: 'bg-status-danger-bg text-status-danger-text border-status-danger-border',
@@ -28,6 +28,11 @@ export const Navigation: React.FC<NavigationProps> = ({
       id: 'analyzer' as ActiveTab,
       label: 'Trade Safety Analyzer',
       icon: ShieldAlert,
+    },
+    {
+      id: 'predictor' as ActiveTab,
+      label: 'Stock Predictor & Forecast',
+      icon: TrendingUp,
     },
     {
       id: 'whatif' as ActiveTab,

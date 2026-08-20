@@ -5,9 +5,11 @@ import { Header } from '@/components/Header';
 import { Navigation, ActiveTab } from '@/components/Navigation';
 import { PortfolioDashboard } from '@/components/PortfolioDashboard';
 import { TradeAnalyzer } from '@/components/TradeAnalyzer';
+import { StockPredictor } from '@/components/StockPredictor';
 import { WhatIfMatrix } from '@/components/WhatIfMatrix';
 import { TradingDNACard } from '@/components/TradingDNACard';
 import { TradeJournal } from '@/components/TradeJournal';
+import { AuthModal } from '@/components/AuthModal';
 import { Portfolio, Position, RiskAlert, User } from '@/lib/database';
 
 export default function Home() {
@@ -18,6 +20,7 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isResetting, setIsResetting] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   useEffect(() => {
     fetchPortfolioData();
@@ -56,6 +59,11 @@ export default function Home() {
     }
   };
 
+  const handleLoginSuccess = (loggedInUser: User) => {
+    setUser(loggedInUser);
+    fetchPortfolioData();
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-canvas">
       
@@ -67,6 +75,7 @@ export default function Home() {
         dailyPnl={portfolio?.dailyPnl || -1420}
         maxDrawdownPct={portfolio?.maxDrawdownPct || 8.5}
         onResetSeed={handleResetSeedData}
+        onOpenAuthModal={() => setIsAuthModalOpen(true)}
         isResetting={isResetting}
       />
 
@@ -98,6 +107,10 @@ export default function Home() {
               <TradeAnalyzer />
             )}
 
+            {activeTab === 'predictor' && (
+              <StockPredictor />
+            )}
+
             {activeTab === 'whatif' && (
               <WhatIfMatrix />
             )}
@@ -113,11 +126,18 @@ export default function Home() {
         )}
       </main>
 
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+      />
+
       {/* Footer */}
       <footer className="w-full border-t border-border-subtle bg-surface py-4 text-center text-xs text-fin-muted">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>Trade-Guard Financial Safety & Behavioral Risk System</span>
-          <span className="font-mono text-[11px]">Deterministic Risk Engine v1.0.0</span>
+          <span className="font-mono text-[11px]">Deterministic Risk & Prediction Engine v1.1.0</span>
         </div>
       </footer>
 
