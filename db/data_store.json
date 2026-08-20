@@ -1,14 +1,14 @@
 {
   "user": {
-    "id": "user_1787232553925",
+    "id": "user_1787232918353",
     "email": "utkarsh.sahay2008@gmail.com",
     "fullName": "utkarsh",
-    "createdAt": "2026-08-20T13:29:13.925Z",
-    "updatedAt": "2026-08-20T13:29:13.925Z"
+    "createdAt": "2026-08-20T13:35:18.353Z",
+    "updatedAt": "2026-08-20T13:35:18.353Z"
   },
   "profile": {
     "id": "prof_demo_01",
-    "userId": "user_1787232553925",
+    "userId": "user_1787232918353",
     "riskTolerance": "moderate",
     "maxAccountRiskPct": 2,
     "maxDrawdownLimitPct": 10,
@@ -18,7 +18,7 @@
   },
   "portfolio": {
     "id": "port_demo_01",
-    "userId": "user_1787232553925",
+    "userId": "user_1787232918353",
     "name": "utkarsh's Portfolio",
     "totalBalance": 100000,
     "availableCash": 64200,

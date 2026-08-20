@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ShieldCheck, RefreshCw, AlertTriangle, UserCheck, Database } from 'lucide-react';
+import { ShieldCheck, RefreshCw, AlertTriangle, UserCheck, Database, Upload } from 'lucide-react';
 
 interface HeaderProps {
   userName: string;
@@ -11,6 +11,7 @@ interface HeaderProps {
   maxDrawdownPct: number;
   onResetSeed: () => void;
   onOpenAuthModal: () => void;
+  onOpenUploadModal: () => void;
   isResetting?: boolean;
 }
 
@@ -22,6 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
   maxDrawdownPct,
   onResetSeed,
   onOpenAuthModal,
+  onOpenUploadModal,
   isResetting = false,
 }) => {
   const isPnlPositive = dailyPnl >= 0;
@@ -79,6 +81,15 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2">
+          {/* Upload CSV/JSON Button */}
+          <button
+            onClick={onOpenUploadModal}
+            className="fin-badge bg-surface-subtle hover:bg-surface-muted text-fin-charcoal border border-border-subtle transition-all cursor-pointer text-xs font-semibold px-3 py-1.5 flex items-center gap-1.5 shadow-fin-sm"
+          >
+            <Upload className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Upload CSV/JSON</span>
+          </button>
+
           {/* Login / Account Button */}
           <button
             onClick={onOpenAuthModal}

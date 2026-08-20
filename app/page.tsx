@@ -10,6 +10,7 @@ import { WhatIfMatrix } from '@/components/WhatIfMatrix';
 import { TradingDNACard } from '@/components/TradingDNACard';
 import { TradeJournal } from '@/components/TradeJournal';
 import { AuthModal } from '@/components/AuthModal';
+import { TradeUploadModal } from '@/components/TradeUploadModal';
 import { Portfolio, Position, RiskAlert, User } from '@/lib/database';
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isResetting, setIsResetting] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   useEffect(() => {
     fetchPortfolioData();
@@ -64,6 +66,10 @@ export default function Home() {
     fetchPortfolioData();
   };
 
+  const handleUploadSuccess = () => {
+    fetchPortfolioData();
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-canvas">
       
@@ -76,6 +82,7 @@ export default function Home() {
         maxDrawdownPct={portfolio?.maxDrawdownPct || 8.5}
         onResetSeed={handleResetSeedData}
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
+        onOpenUploadModal={() => setIsUploadModalOpen(true)}
         isResetting={isResetting}
       />
 
@@ -120,7 +127,9 @@ export default function Home() {
             )}
 
             {activeTab === 'journal' && (
-              <TradeJournal />
+              <TradeJournal
+                onOpenUploadModal={() => setIsUploadModalOpen(true)}
+              />
             )}
           </>
         )}
@@ -133,11 +142,18 @@ export default function Home() {
         onLoginSuccess={handleLoginSuccess}
       />
 
+      {/* Upload CSV/JSON Modal */}
+      <TradeUploadModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        onUploadSuccess={handleUploadSuccess}
+      />
+
       {/* Footer */}
       <footer className="w-full border-t border-border-subtle bg-surface py-4 text-center text-xs text-fin-muted">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>Trade-Guard Financial Safety & Behavioral Risk System</span>
-          <span className="font-mono text-[11px]">Deterministic Risk & Prediction Engine v1.1.0</span>
+          <span className="font-mono text-[11px]">Deterministic Risk, Prediction & Import Engine v1.2.0</span>
         </div>
       </footer>
 

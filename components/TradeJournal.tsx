@@ -1,10 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { BookOpen, Plus, Search, Filter, Calendar, Tag, AlertCircle } from 'lucide-react';
+import { BookOpen, Plus, Search, Filter, Calendar, Tag, AlertCircle, Upload } from 'lucide-react';
 import { Trade, TradeJournal as TradeJournalModel } from '@/lib/database';
 
-export const TradeJournal: React.FC = () => {
+interface TradeJournalProps {
+  onOpenUploadModal?: () => void;
+}
+
+export const TradeJournal: React.FC<TradeJournalProps> = ({ onOpenUploadModal }) => {
   const [trades, setTrades] = useState<Trade[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
@@ -91,13 +95,25 @@ export const TradeJournal: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="fin-badge bg-fin-charcoal hover:bg-slate-800 text-surface px-4 py-2 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1.5 self-start sm:self-auto shadow-fin-sm"
-        >
-          <Plus className="w-4 h-4 text-emerald-400" />
-          <span>Log New Trade</span>
-        </button>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          {onOpenUploadModal && (
+            <button
+              onClick={onOpenUploadModal}
+              className="fin-badge bg-surface-subtle hover:bg-surface-muted text-fin-charcoal border border-border-subtle px-3.5 py-2 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1.5 shadow-fin-sm"
+            >
+              <Upload className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Import CSV/JSON</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="fin-badge bg-fin-charcoal hover:bg-slate-800 text-surface px-4 py-2 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1.5 shadow-fin-sm"
+          >
+            <Plus className="w-4 h-4 text-emerald-400" />
+            <span>Log New Trade</span>
+          </button>
+        </div>
       </div>
 
       {/* Filter & Search Controls */}
