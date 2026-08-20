@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ShieldCheck, Lock, Mail, User, X, KeyRound, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Mail, User, X, KeyRound, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
 import { User as UserModel } from '@/lib/database';
 
 interface AuthModalProps {
@@ -20,13 +20,49 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [password, setPassword] = useState('password123');
   const [fullName, setFullName] = useState('Alex Vance');
   const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
+  const handleModeSwitch = (newMode: 'LOGIN' | 'REGISTER') => {
+    setMode(newMode);
+    setErrorMsg('');
+    setSuccessMsg('');
+    if (newMode === 'REGISTER' && email === 'trader@tradeguard.io') {
+      setEmail('');
+      setPassword('');
+      setFullName('');
+    } else if (newMode === 'LOGIN' && !email) {
+      setEmail('trader@tradeguard.io');
+      setPassword('password123');
+      setFullName('Alex Vance');
+    }
+  };
+
+  const useDemoCredentials = () => {
+    setMode('LOGIN');
+    setEmail('trader@tradeguard.io');
+    setPassword('password123');
+    setFullName('Alex Vance');
+    setErrorMsg('');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
+    setSuccessMsg('');
+
+    if (!email || !email.includes('@')) {
+      setErrorMsg('Please enter a valid email address.');
+      return;
+    }
+
+    if (!password || password.length < 4) {
+      setErrorMsg('Password must be at least 4 characters long.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -42,8 +78,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       });
       const data = await resp.json();
       if (data.success) {
-        onLoginSuccess(data.user);
-        onClose();
+        setSuccessMsg(mode === 'LOGIN' ? `Welcome back, ${data.user.fullName}!` : `Account created for ${data.user.email}!`);
+        setTimeout(() => {
+          onLoginSuccess(data.user);
+          onClose();
+        }, 600);
       } else {
         setErrorMsg(data.error || 'Authentication failed');
       }
@@ -83,7 +122,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         <div className="flex p-1 bg-surface-subtle rounded-xl border border-border-subtle text-xs">
           <button
             type="button"
-            onClick={() => setMode('LOGIN')}
+            onClick={() => handleModeSwitch('LOGIN')}
             className={`flex-1 py-2 font-medium rounded-lg transition-all cursor-pointer ${
               mode === 'LOGIN' ? 'bg-surface text-fin-charcoal shadow-fin-sm font-semibold' : 'text-fin-muted hover:text-fin-body'
             }`}
@@ -92,7 +131,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </button>
           <button
             type="button"
-            onClick={() => setMode('REGISTER')}
+            onClick={() => handleModeSwitch('REGISTER')}
             className={`flex-1 py-2 font-medium rounded-lg transition-all cursor-pointer ${
               mode === 'REGISTER' ? 'bg-surface text-fin-charcoal shadow-fin-sm font-semibold' : 'text-fin-muted hover:text-fin-body'
             }`}
@@ -104,8 +143,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           {errorMsg && (
-            <div className="p-3 rounded-lg bg-status-danger-bg border border-status-danger-border text-status-danger-text text-xs">
-              {errorMsg}
+            <div className="p-3 rounded-lg bg-status-danger-bg border border-status-danger-border text-status-danger-text text-xs flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
+          {successMsg && (
+            <div className="p-3 rounded-lg bg-status-healthy-bg border border-status-healthy-border text-status-healthy-text text-xs flex items-center gap-2 font-medium">
+              <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+              <span>{successMsg}</span>
             </div>
           )}
 
@@ -113,13 +160,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <div>
               <label className="block font-medium text-fin-muted mb-1">Full Name</label>
               <div className="relative">
-                <User className="w-4 h-4 text-fin-muted absolute left-3 top-2.5" />
+                <User className="w-4 h-4 text-fin-muted absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Alex Vance"
-                  className="fin-input w-full pl-9"
+                  placeholder="e.g. Alex Vance"
+                  className="fin-input w-full pl-11 pr-3 font-medium text-fin-charcoal"
                   required
                 />
               </div>
@@ -129,13 +176,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <div>
             <label className="block font-medium text-fin-muted mb-1">Login ID / Email</label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-fin-muted absolute left-3 top-2.5" />
+              <Mail className="w-4 h-4 text-fin-muted absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="trader@tradeguard.io"
-                className="fin-input w-full pl-9 font-medium"
+                placeholder="you@example.com"
+                className="fin-input w-full pl-11 pr-3 font-medium text-fin-charcoal"
                 required
               />
             </div>
@@ -144,13 +191,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <div>
             <label className="block font-medium text-fin-muted mb-1">Password</label>
             <div className="relative">
-              <KeyRound className="w-4 h-4 text-fin-muted absolute left-3 top-2.5" />
+              <KeyRound className="w-4 h-4 text-fin-muted absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="fin-input w-full pl-9 font-mono"
+                className="fin-input w-full pl-11 pr-3 font-mono text-fin-charcoal"
                 required
               />
             </div>
@@ -168,8 +215,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </div>
 
           {/* Quick Demo Hint */}
-          <div className="text-[11px] text-center text-fin-muted bg-surface-subtle p-2.5 rounded-lg border border-border-subtle">
-            Demo Credentials: <span className="font-semibold text-fin-charcoal">trader@tradeguard.io</span> / <span className="font-mono text-fin-charcoal">password123</span>
+          <div className="flex items-center justify-between text-[11px] text-fin-muted bg-surface-subtle p-2.5 rounded-lg border border-border-subtle">
+            <span>Demo: <span className="font-semibold text-fin-charcoal">trader@tradeguard.io</span></span>
+            <button
+              type="button"
+              onClick={useDemoCredentials}
+              className="text-emerald-700 font-semibold hover:underline cursor-pointer"
+            >
+              Fill Demo Login
+            </button>
           </div>
         </form>
 

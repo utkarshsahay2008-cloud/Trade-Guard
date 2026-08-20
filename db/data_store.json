@@ -3,8 +3,8 @@
     "id": "user_demo_01",
     "email": "trader@tradeguard.io",
     "fullName": "Alex Vance",
-    "createdAt": "2026-07-19T15:59:38.499Z",
-    "updatedAt": "2026-08-17T15:59:38.499Z"
+    "createdAt": "2026-07-21T13:26:40.211Z",
+    "updatedAt": "2026-08-19T13:26:40.211Z"
   },
   "profile": {
     "id": "prof_demo_01",
@@ -13,22 +13,22 @@
     "maxAccountRiskPct": 2,
     "maxDrawdownLimitPct": 10,
     "preferredCurrency": "₹",
-    "createdAt": "2026-07-19T15:59:38.499Z",
-    "updatedAt": "2026-08-17T15:59:38.499Z"
+    "createdAt": "2026-07-21T13:26:40.211Z",
+    "updatedAt": "2026-08-19T13:26:40.211Z"
   },
   "portfolio": {
     "id": "port_demo_01",
     "userId": "user_demo_01",
     "name": "Primary Swing & Momentum",
-    "totalBalance": 100500,
+    "totalBalance": 100000,
     "availableCash": 64200,
     "allocatedMargin": 35800,
     "dailyPnl": -1420,
-    "realizedPnl": -3350,
+    "realizedPnl": -3850,
     "peakBalance": 112500,
     "maxDrawdownPct": 8.5,
-    "createdAt": "2026-07-19T15:59:38.499Z",
-    "updatedAt": "2026-08-18T16:07:13.259Z"
+    "createdAt": "2026-07-21T13:26:40.211Z",
+    "updatedAt": "2026-08-20T12:26:40.211Z"
   },
   "positions": [
     {
@@ -46,8 +46,8 @@
       "unrealizedPnl": 1500,
       "unrealizedPnlPct": 1.03,
       "riskScore": 72,
-      "openedAt": "2026-08-18T11:59:38.499Z",
-      "updatedAt": "2026-08-18T15:54:38.499Z"
+      "openedAt": "2026-08-20T09:26:40.211Z",
+      "updatedAt": "2026-08-20T13:21:40.211Z"
     },
     {
       "id": "pos_02",
@@ -64,43 +64,11 @@
       "unrealizedPnl": -600,
       "unrealizedPnlPct": -1.9,
       "riskScore": 45,
-      "openedAt": "2026-08-17T21:59:38.499Z",
-      "updatedAt": "2026-08-18T15:54:38.499Z"
+      "openedAt": "2026-08-19T19:26:40.211Z",
+      "updatedAt": "2026-08-20T13:21:40.211Z"
     }
   ],
   "trades": [
-    {
-      "id": "tr_1787069233259",
-      "portfolioId": "port_demo_01",
-      "symbol": "RELIANCE",
-      "assetClass": "EQUITY",
-      "direction": "LONG",
-      "quantity": 25,
-      "entryPrice": 2950,
-      "exitPrice": 2970,
-      "stopLoss": 2900,
-      "takeProfit": 3050,
-      "leverage": 1,
-      "pnl": 500,
-      "pnlPct": 0.68,
-      "status": "CLOSED",
-      "riskScoreAtEntry": 25,
-      "executedAt": "2026-08-18T16:07:13.259Z",
-      "closedAt": "2026-08-18T16:07:13.259Z",
-      "journalEntry": {
-        "id": "j_1787069233259",
-        "tradeId": "tr_1787069233259",
-        "userId": "user_demo_01",
-        "notes": "hi",
-        "emotionalState": "CONFIDENT",
-        "convictionLevel": 4,
-        "tags": [
-          "CONFIDENT",
-          "JOURNAL_LOG"
-        ],
-        "createdAt": "2026-08-18T16:07:13.259Z"
-      }
-    },
     {
       "id": "tr_01",
       "portfolioId": "port_demo_01",
@@ -117,8 +85,8 @@
       "pnlPct": 2.54,
       "status": "CLOSED",
       "riskScoreAtEntry": 32,
-      "executedAt": "2026-07-21T15:59:38.499Z",
-      "closedAt": "2026-07-23T15:59:38.499Z"
+      "executedAt": "2026-07-23T13:26:40.211Z",
+      "closedAt": "2026-07-25T13:26:40.211Z"
     },
     {
       "id": "tr_02",
@@ -136,8 +104,8 @@
       "pnlPct": 3.63,
       "status": "CLOSED",
       "riskScoreAtEntry": 28,
-      "executedAt": "2026-07-24T15:59:38.499Z",
-      "closedAt": "2026-07-26T15:59:38.499Z"
+      "executedAt": "2026-07-26T13:26:40.211Z",
+      "closedAt": "2026-07-28T13:26:40.211Z"
     },
     {
       "id": "tr_03",
@@ -155,8 +123,8 @@
       "pnlPct": 2.75,
       "status": "CLOSED",
       "riskScoreAtEntry": 35,
-      "executedAt": "2026-07-27T15:59:38.499Z",
-      "closedAt": "2026-07-28T15:59:38.499Z"
+      "executedAt": "2026-07-29T13:26:40.211Z",
+      "closedAt": "2026-07-30T13:26:40.211Z"
     },
     {
       "id": "tr_04",
@@ -174,8 +142,8 @@
       "pnlPct": -1.42,
       "status": "CLOSED",
       "riskScoreAtEntry": 30,
-      "executedAt": "2026-07-29T15:59:38.499Z",
-      "closedAt": "2026-07-30T15:59:38.499Z"
+      "executedAt": "2026-07-31T13:26:40.211Z",
+      "closedAt": "2026-08-01T13:26:40.211Z"
     },
     {
       "id": "tr_05",
@@ -193,8 +161,8 @@
       "pnlPct": 7.27,
       "status": "CLOSED",
       "riskScoreAtEntry": 42,
-      "executedAt": "2026-07-31T15:59:38.499Z",
-      "closedAt": "2026-08-02T15:59:38.499Z"
+      "executedAt": "2026-08-02T13:26:40.211Z",
+      "closedAt": "2026-08-04T13:26:40.211Z"
     },
     {
       "id": "tr_06",
@@ -212,8 +180,8 @@
       "pnlPct": 4.1,
       "status": "CLOSED",
       "riskScoreAtEntry": 48,
-      "executedAt": "2026-08-03T15:59:38.499Z",
-      "closedAt": "2026-08-04T15:59:38.499Z"
+      "executedAt": "2026-08-05T13:26:40.211Z",
+      "closedAt": "2026-08-06T13:26:40.211Z"
     },
     {
       "id": "tr_07",
@@ -231,8 +199,8 @@
       "pnlPct": 2.61,
       "status": "CLOSED",
       "riskScoreAtEntry": 31,
-      "executedAt": "2026-08-05T15:59:38.499Z",
-      "closedAt": "2026-08-06T15:59:38.499Z"
+      "executedAt": "2026-08-07T13:26:40.211Z",
+      "closedAt": "2026-08-08T13:26:40.211Z"
     },
     {
       "id": "tr_08",
@@ -250,8 +218,8 @@
       "pnlPct": 1.76,
       "status": "CLOSED",
       "riskScoreAtEntry": 33,
-      "executedAt": "2026-08-07T15:59:38.499Z",
-      "closedAt": "2026-08-08T15:59:38.499Z"
+      "executedAt": "2026-08-09T13:26:40.211Z",
+      "closedAt": "2026-08-10T13:26:40.211Z"
     },
     {
       "id": "tr_09",
@@ -269,8 +237,8 @@
       "pnlPct": 4,
       "status": "CLOSED",
       "riskScoreAtEntry": 34,
-      "executedAt": "2026-08-09T15:59:38.499Z",
-      "closedAt": "2026-08-10T15:59:38.499Z"
+      "executedAt": "2026-08-11T13:26:40.211Z",
+      "closedAt": "2026-08-12T13:26:40.211Z"
     },
     {
       "id": "tr_10",
@@ -288,8 +256,8 @@
       "pnlPct": -3.33,
       "status": "CLOSED",
       "riskScoreAtEntry": 45,
-      "executedAt": "2026-08-11T15:59:38.499Z",
-      "closedAt": "2026-08-12T15:59:38.499Z"
+      "executedAt": "2026-08-13T13:26:40.211Z",
+      "closedAt": "2026-08-14T13:26:40.211Z"
     },
     {
       "id": "tr_11",
@@ -307,8 +275,8 @@
       "pnlPct": 1.68,
       "status": "CLOSED",
       "riskScoreAtEntry": 36,
-      "executedAt": "2026-08-12T15:59:38.499Z",
-      "closedAt": "2026-08-13T15:59:38.499Z"
+      "executedAt": "2026-08-14T13:26:40.211Z",
+      "closedAt": "2026-08-15T13:26:40.211Z"
     },
     {
       "id": "tr_12",
@@ -326,8 +294,8 @@
       "pnlPct": 1.71,
       "status": "CLOSED",
       "riskScoreAtEntry": 38,
-      "executedAt": "2026-08-13T15:59:38.499Z",
-      "closedAt": "2026-08-14T15:59:38.499Z"
+      "executedAt": "2026-08-15T13:26:40.211Z",
+      "closedAt": "2026-08-16T13:26:40.211Z"
     },
     {
       "id": "tr_13_loss1",
@@ -345,8 +313,8 @@
       "pnlPct": -1.7,
       "status": "CLOSED",
       "riskScoreAtEntry": 45,
-      "executedAt": "2026-08-15T15:59:38.499Z",
-      "closedAt": "2026-08-15T15:59:38.499Z"
+      "executedAt": "2026-08-17T13:26:40.211Z",
+      "closedAt": "2026-08-17T13:26:40.211Z"
     },
     {
       "id": "tr_14_loss2",
@@ -364,8 +332,8 @@
       "pnlPct": -3.57,
       "status": "CLOSED",
       "riskScoreAtEntry": 55,
-      "executedAt": "2026-08-16T15:59:38.499Z",
-      "closedAt": "2026-08-16T17:59:38.499Z"
+      "executedAt": "2026-08-18T13:26:40.211Z",
+      "closedAt": "2026-08-18T15:26:40.211Z"
     },
     {
       "id": "tr_15_loss3",
@@ -383,8 +351,8 @@
       "pnlPct": -3.75,
       "status": "CLOSED",
       "riskScoreAtEntry": 62,
-      "executedAt": "2026-08-17T09:59:38.499Z",
-      "closedAt": "2026-08-17T11:59:38.499Z"
+      "executedAt": "2026-08-19T07:26:40.211Z",
+      "closedAt": "2026-08-19T09:26:40.211Z"
     },
     {
       "id": "tr_16_revenge",
@@ -402,8 +370,8 @@
       "pnlPct": -1.37,
       "status": "CLOSED",
       "riskScoreAtEntry": 88,
-      "executedAt": "2026-08-17T12:59:38.499Z",
-      "closedAt": "2026-08-17T15:59:38.499Z"
+      "executedAt": "2026-08-19T10:26:40.211Z",
+      "closedAt": "2026-08-19T13:26:40.211Z"
     },
     {
       "id": "tr_17_fomo",
@@ -421,8 +389,8 @@
       "pnlPct": -2.43,
       "status": "CLOSED",
       "riskScoreAtEntry": 82,
-      "executedAt": "2026-08-17T19:59:38.499Z",
-      "closedAt": "2026-08-18T00:59:38.499Z"
+      "executedAt": "2026-08-19T17:26:40.211Z",
+      "closedAt": "2026-08-19T22:26:40.211Z"
     },
     {
       "id": "tr_18",
@@ -440,24 +408,11 @@
       "pnlPct": 1.38,
       "status": "CLOSED",
       "riskScoreAtEntry": 38,
-      "executedAt": "2026-08-18T03:59:38.499Z",
-      "closedAt": "2026-08-18T07:59:38.499Z"
+      "executedAt": "2026-08-20T01:26:40.211Z",
+      "closedAt": "2026-08-20T05:26:40.211Z"
     }
   ],
   "journals": [
-    {
-      "id": "j_1787069233259",
-      "tradeId": "tr_1787069233259",
-      "userId": "user_demo_01",
-      "notes": "hi",
-      "emotionalState": "CONFIDENT",
-      "convictionLevel": 4,
-      "tags": [
-        "CONFIDENT",
-        "JOURNAL_LOG"
-      ],
-      "createdAt": "2026-08-18T16:07:13.259Z"
-    },
     {
       "id": "j_01",
       "tradeId": "tr_16_revenge",
@@ -470,7 +425,7 @@
         "OVERSIZED",
         "REVENGE"
       ],
-      "createdAt": "2026-08-17T12:59:38.499Z"
+      "createdAt": "2026-08-19T10:26:40.211Z"
     },
     {
       "id": "j_02",
@@ -483,7 +438,7 @@
         "HIGH_ENTRY",
         "FOMO_CHASE"
       ],
-      "createdAt": "2026-08-17T19:59:38.499Z"
+      "createdAt": "2026-08-19T17:26:40.211Z"
     },
     {
       "id": "j_03",
@@ -496,7 +451,7 @@
         "DISCIPLINED",
         "SUPPORT_BOUNCE"
       ],
-      "createdAt": "2026-08-18T03:59:38.499Z"
+      "createdAt": "2026-08-20T01:26:40.211Z"
     }
   ],
   "riskAlerts": [
@@ -511,7 +466,7 @@
       "whyItMatters": "A 2.7% adverse move in RELIANCE will wipe out 4.0% of total account capital, breaching your max 2.0% risk rule.",
       "suggestedAction": "Reduce position quantity from 50 to 25 units using the Loss Shield to align with risk tolerance.",
       "isDismissed": false,
-      "createdAt": "2026-08-18T12:59:38.499Z"
+      "createdAt": "2026-08-20T10:26:40.211Z"
     },
     {
       "id": "alert_02",
@@ -523,7 +478,7 @@
       "whyItMatters": "Trading larger sizes immediately following drawdown periods historically correlates with a 72% loss probability.",
       "suggestedAction": "Enforce a 2-hour cooling period after consecutive loss trades before opening new orders.",
       "isDismissed": false,
-      "createdAt": "2026-08-18T05:59:38.499Z"
+      "createdAt": "2026-08-20T03:26:40.211Z"
     },
     {
       "id": "alert_03",
@@ -535,7 +490,7 @@
       "whyItMatters": "Approaching the 10.0% maximum drawdown ceiling specified in your risk profile.",
       "suggestedAction": "Lower leverage on new entries to maximum 2x until drawdown recovers below 5.0%.",
       "isDismissed": false,
-      "createdAt": "2026-08-17T21:59:38.499Z"
+      "createdAt": "2026-08-19T19:26:40.211Z"
     }
   ],
   "behavioralSignals": {
@@ -548,7 +503,7 @@
     "positionAnomalyScore": 75,
     "primaryArchetype": "Drawdown Escalator",
     "dominantTrigger": "Size escalation immediately following consecutive loss trades",
-    "calculatedAt": "2026-08-18T14:59:38.499Z"
+    "calculatedAt": "2026-08-20T12:26:40.211Z"
   },
   "marketData": {
     "RELIANCE": {
@@ -560,7 +515,7 @@
       "high24h": 2980,
       "low24h": 2920,
       "volume24h": 4200000,
-      "updatedAt": "2026-08-18T15:57:38.499Z"
+      "updatedAt": "2026-08-20T13:24:40.211Z"
     },
     "TATASTEEL": {
       "symbol": "TATASTEEL",
@@ -571,7 +526,7 @@
       "high24h": 160,
       "low24h": 153.5,
       "volume24h": 8900000,
-      "updatedAt": "2026-08-18T15:57:38.499Z"
+      "updatedAt": "2026-08-20T13:24:40.211Z"
     },
     "INFY": {
       "symbol": "INFY",
@@ -582,7 +537,7 @@
       "high24h": 1845,
       "low24h": 1810,
       "volume24h": 3100000,
-      "updatedAt": "2026-08-18T15:57:38.499Z"
+      "updatedAt": "2026-08-20T13:24:40.211Z"
     },
     "NVDA": {
       "symbol": "NVDA",
@@ -593,7 +548,7 @@
       "high24h": 130,
       "low24h": 124,
       "volume24h": 45000000,
-      "updatedAt": "2026-08-18T15:57:38.499Z"
+      "updatedAt": "2026-08-20T13:24:40.211Z"
     },
     "BTC/USD": {
       "symbol": "BTC/USD",
@@ -604,7 +559,7 @@
       "high24h": 65800,
       "low24h": 63900,
       "volume24h": 1820000000,
-      "updatedAt": "2026-08-18T15:57:38.499Z"
+      "updatedAt": "2026-08-20T13:24:40.211Z"
     }
   }
 }

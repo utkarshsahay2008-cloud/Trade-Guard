@@ -6,25 +6,39 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { action = 'LOGIN', email, password, fullName } = body;
 
-    if (!email || !password) {
+    if (!email || !email.includes('@')) {
       return NextResponse.json(
-        { success: false, error: 'Login ID / Email and Password are required' },
+        { success: false, error: 'A valid Login ID / Email is required' },
+        { status: 400 }
+      );
+    }
+
+    if (!password || password.length < 3) {
+      return NextResponse.json(
+        { success: false, error: 'Password is required' },
         { status: 400 }
       );
     }
 
     const store = getDatabaseStore();
+    const cleanEmail = email.trim().toLowerCase();
+    const formattedName = fullName && fullName.trim().length > 0 
+      ? fullName.trim() 
+      : cleanEmail.split('@')[0].replace(/[^a-zA-Z0-9]/g, ' ');
 
     if (action === 'REGISTER') {
       const newUser = {
         id: `user_${Date.now()}`,
-        email,
-        fullName: fullName || email.split('@')[0],
+        email: cleanEmail,
+        fullName: formattedName,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
+
       store.user = newUser;
+      store.profile.userId = newUser.id;
       store.portfolio.userId = newUser.id;
+      store.portfolio.name = `${formattedName}'s Portfolio`;
       saveDatabaseStore(store);
 
       return NextResponse.json({
@@ -36,27 +50,19 @@ export async function POST(req: NextRequest) {
     }
 
     // Default LOGIN
-    // For demo convenience, accept password or match default user
-    if (email.toLowerCase() === store.user.email.toLowerCase() || email.length > 3) {
-      // Update user details if new login ID provided
-      if (email.toLowerCase() !== store.user.email.toLowerCase()) {
-        store.user.email = email;
-        store.user.fullName = fullName || email.split('@')[0];
-        saveDatabaseStore(store);
-      }
+    store.user.email = cleanEmail;
+    store.user.fullName = formattedName || store.user.fullName;
+    store.user.updatedAt = new Date().toISOString();
+    store.portfolio.name = `${store.user.fullName}'s Portfolio`;
+    saveDatabaseStore(store);
 
-      return NextResponse.json({
-        success: true,
-        message: 'Logged in successfully',
-        user: store.user,
-        portfolio: store.portfolio,
-      });
-    }
+    return NextResponse.json({
+      success: true,
+      message: 'Logged in successfully',
+      user: store.user,
+      portfolio: store.portfolio,
+    });
 
-    return NextResponse.json(
-      { success: false, error: 'Invalid login ID or password' },
-      { status: 401 }
-    );
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message || 'Authentication failed' },
