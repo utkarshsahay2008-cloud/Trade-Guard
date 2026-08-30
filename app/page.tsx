@@ -20,18 +20,22 @@ export default function Home() {
   const [positions, setPositions] = useState<Position[]>([]);
   const [riskAlerts, setRiskAlerts] = useState<RiskAlert[]>([]);
   
-  // Synchronous client initializer for seamless user persistence (zero Alex Vance flash)
+  // Clear any legacy browser session if it contains old demo names
   const [user, setUser] = useState<User | null>(() => {
     if (typeof window !== 'undefined') {
       const savedUserStr = localStorage.getItem('tradeguard_user');
       if (savedUserStr) {
-        try {
-          return JSON.parse(savedUserStr);
-        } catch (e) {}
+        if (savedUserStr.includes('Alex Vance')) {
+          localStorage.removeItem('tradeguard_user');
+        } else {
+          try {
+            return JSON.parse(savedUserStr);
+          } catch (e) {}
+        }
       }
     }
     return {
-      id: 'usr_default',
+      id: 'usr_utkarsh_01',
       email: 'utkarsh@tradeguard.io',
       fullName: 'Utkarsh',
       createdAt: new Date().toISOString(),
@@ -75,6 +79,16 @@ export default function Home() {
       const resp = await fetch('/api/seed', { method: 'POST' });
       const data = await resp.json();
       if (data.success) {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('tradeguard_user');
+        }
+        setUser({
+          id: 'usr_utkarsh_01',
+          email: 'utkarsh@tradeguard.io',
+          fullName: 'Utkarsh',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
         await fetchPortfolioData();
       }
     } catch (e) {
@@ -94,7 +108,7 @@ export default function Home() {
       localStorage.removeItem('tradeguard_user');
     }
     const defaultUser: User = {
-      id: 'usr_default',
+      id: 'usr_utkarsh_01',
       email: 'utkarsh@tradeguard.io',
       fullName: 'Utkarsh',
       createdAt: new Date().toISOString(),
@@ -207,7 +221,7 @@ export default function Home() {
             <span className="text-emerald-700 font-semibold">PostgreSQL & Deterministic Risk Connected</span>
           </div>
           <span className="font-mono text-[11px] bg-surface-subtle px-2 py-1 rounded border border-border-subtle">
-            v1.3.3 Profile Fix & Clean Dashboard Release
+            v1.3.4 Automatic Session Migration & Clean Layout
           </span>
         </div>
       </footer>
