@@ -43,16 +43,46 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
 
   const activeAlerts = riskAlerts.filter(a => !a.isDismissed);
 
-  // Simulated Equity Curve Data for Recharts
-  const equityCurveData = [
-    { date: 'Aug 01', balance: 92000, pnl: -800 },
-    { date: 'Aug 05', balance: 94500, pnl: 2500 },
-    { date: 'Aug 10', balance: 93200, pnl: -1300 },
-    { date: 'Aug 15', balance: 97800, pnl: 4600 },
-    { date: 'Aug 20', balance: 96100, pnl: -1700 },
-    { date: 'Aug 25', balance: 99400, pnl: 3300 },
-    { date: 'Aug 30', balance: portfolio.totalBalance, pnl: portfolio.dailyPnl },
-  ];
+  // Dynamic Equity Curve Generator based on selected timeframe
+  const getEquityCurveData = (tf: '1W' | '1M' | '3M' | 'ALL') => {
+    const currentVal = portfolio.totalBalance;
+    if (tf === '1W') {
+      return [
+        { date: 'Mon', balance: currentVal - 1400, pnl: -600 },
+        { date: 'Tue', balance: currentVal - 2200, pnl: -800 },
+        { date: 'Wed', balance: currentVal - 900, pnl: 1300 },
+        { date: 'Thu', balance: currentVal - 1420, pnl: -520 },
+        { date: 'Fri', balance: currentVal, pnl: portfolio.dailyPnl },
+      ];
+    }
+    if (tf === '1M') {
+      return [
+        { date: 'Aug 01', balance: currentVal - 8000, pnl: -800 },
+        { date: 'Aug 05', balance: currentVal - 5500, pnl: 2500 },
+        { date: 'Aug 10', balance: currentVal - 6800, pnl: -1300 },
+        { date: 'Aug 15', balance: currentVal - 2200, pnl: 4600 },
+        { date: 'Aug 20', balance: currentVal - 3900, pnl: -1700 },
+        { date: 'Aug 25', balance: currentVal - 600, pnl: 3300 },
+        { date: 'Aug 30', balance: currentVal, pnl: portfolio.dailyPnl },
+      ];
+    }
+    if (tf === '3M') {
+      return [
+        { date: 'Jun', balance: currentVal - 18000, pnl: 3200 },
+        { date: 'Jul', balance: currentVal - 10000, pnl: 8000 },
+        { date: 'Aug', balance: currentVal, pnl: portfolio.dailyPnl },
+      ];
+    }
+    // ALL
+    return [
+      { date: 'Q1', balance: 80000, pnl: 5000 },
+      { date: 'Q2', balance: 88000, pnl: 8000 },
+      { date: 'Q3', balance: currentVal - 5000, pnl: 7000 },
+      { date: 'Current', balance: currentVal, pnl: portfolio.dailyPnl },
+    ];
+  };
+
+  const equityCurveData = getEquityCurveData(timeframe);
 
   // Asset allocation breakdown calculation
   const totalExposure = positions.reduce((sum, p) => sum + (p.quantity * p.currentPrice), 0);
@@ -65,7 +95,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <h2 className="text-xl font-bold text-fin-charcoal">Portfolio Overview & Safety Command Center</h2>
-            <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
+            <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full">
               LIVE MONITORING
             </span>
           </div>
@@ -75,13 +105,15 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
         </div>
 
         <div className="flex items-center gap-2 self-start md:self-auto">
-          <div className="bg-surface-subtle p-1 rounded-xl border border-border-subtle flex text-xs font-semibold">
+          <div className="bg-slate-100 p-1 rounded-xl border border-slate-200 flex text-xs font-semibold">
             {(['1W', '1M', '3M', 'ALL'] as const).map((tf) => (
               <button
                 key={tf}
                 onClick={() => setTimeframe(tf)}
-                className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
-                  timeframe === tf ? 'bg-surface text-fin-charcoal shadow-fin-sm font-bold' : 'text-fin-muted hover:text-fin-body'
+                className={`px-3 py-1 rounded-lg transition-all cursor-pointer font-bold ${
+                  timeframe === tf
+                    ? 'bg-emerald-600 text-white shadow-fin-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
                 }`}
               >
                 {tf}
@@ -101,7 +133,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
             <DollarSign className="w-4 h-4 text-emerald-600" />
           </div>
           <div className="text-2xl font-bold text-fin-charcoal font-mono">₹{portfolio.totalBalance.toLocaleString()}</div>
-          <div className="text-[11px] text-fin-muted flex items-center justify-between pt-1 border-t border-border-subtle">
+          <div className="text-[11px] text-fin-muted flex items-center justify-between pt-1 border-t border-border-subtle font-medium">
             <span>Cash: ₹{portfolio.availableCash.toLocaleString()}</span>
             <span>Margin: ₹{portfolio.allocatedMargin.toLocaleString()}</span>
           </div>
@@ -116,7 +148,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
           <div className={`text-2xl font-bold font-mono ${portfolio.dailyPnl >= 0 ? 'text-status-healthy-text' : 'text-status-danger-text'}`}>
             {portfolio.dailyPnl >= 0 ? '+' : ''}₹{portfolio.dailyPnl.toLocaleString()}
           </div>
-          <div className="text-[11px] text-fin-muted pt-1 border-t border-border-subtle">
+          <div className="text-[11px] text-fin-muted pt-1 border-t border-border-subtle font-medium">
             Total Net Realized: ₹{portfolio.realizedPnl.toLocaleString()}
           </div>
         </div>
@@ -128,7 +160,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
             <Activity className="w-4 h-4 text-amber-500" />
           </div>
           <div className="text-2xl font-bold text-fin-charcoal font-mono">{portfolio.maxDrawdownPct}%</div>
-          <div className="text-[11px] text-fin-muted pt-1 border-t border-border-subtle">
+          <div className="text-[11px] text-fin-muted pt-1 border-t border-border-subtle font-medium">
             Peak Balance: ₹{portfolio.peakBalance.toLocaleString()}
           </div>
         </div>
@@ -157,11 +189,11 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
             <div>
               <h3 className="font-bold text-fin-charcoal text-base flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-emerald-600" />
-                <span>Account Equity Performance</span>
+                <span>Account Equity Performance ({timeframe})</span>
               </h3>
               <p className="text-xs text-fin-muted">Cumulative portfolio value growth over time</p>
             </div>
-            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
               +8.0% Total Equity Return
             </span>
           </div>
@@ -171,7 +203,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
               <AreaChart data={equityCurveData}>
                 <defs>
                   <linearGradient id="equityGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
+                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.35} />
                     <stop offset="95%" stopColor="#10B981" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
@@ -204,11 +236,11 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
               const pct = totalExposure > 0 ? Math.round((posVal / totalExposure) * 100) : 0;
               return (
                 <div key={pos.id} className="space-y-1">
-                  <div className="flex justify-between items-center text-xs font-semibold">
+                  <div className="flex justify-between items-center text-xs font-bold">
                     <span className="text-fin-charcoal">{pos.symbol} ({pos.direction})</span>
-                    <span className="text-fin-muted">₹{posVal.toLocaleString()} ({pct}%)</span>
+                    <span className="text-fin-muted font-mono">₹{posVal.toLocaleString()} ({pct}%)</span>
                   </div>
-                  <div className="w-full h-2 bg-surface-subtle rounded-full overflow-hidden border border-border-subtle">
+                  <div className="w-full h-2.5 bg-surface-subtle rounded-full overflow-hidden border border-border-subtle">
                     <div
                       className={`h-full rounded-full ${pos.direction === 'LONG' ? 'bg-emerald-500' : 'bg-rose-500'}`}
                       style={{ width: `${pct}%` }}
@@ -219,8 +251,8 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
             })}
           </div>
 
-          <div className="p-3 bg-surface-subtle rounded-xl border border-border-subtle text-xs text-fin-muted leading-relaxed mt-4">
-            <span className="font-semibold text-fin-charcoal">Diversification Insight:</span> Portfolio exposure is concentrated in NSE India swing assets with high risk score limits.
+          <div className="p-3 bg-surface-subtle rounded-xl border border-border-subtle text-xs text-fin-muted leading-relaxed mt-4 font-medium">
+            <span className="font-bold text-fin-charcoal">Diversification Insight:</span> Portfolio exposure is concentrated in NSE India swing assets with high risk score limits.
           </div>
         </div>
 
@@ -258,7 +290,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
                   <p className="text-xs text-fin-body leading-relaxed">{alert.explanation}</p>
                 </div>
 
-                <div className="flex items-center justify-between border-t border-black/5 pt-2 text-xs font-semibold text-fin-charcoal">
+                <div className="flex items-center justify-between border-t border-black/5 pt-2 text-xs font-bold text-fin-charcoal">
                   <span>Action: {alert.suggestedAction}</span>
                   <span className="hover:underline flex items-center gap-1 text-emerald-700">
                     Explain with AI <ExternalLink className="w-3.5 h-3.5" />

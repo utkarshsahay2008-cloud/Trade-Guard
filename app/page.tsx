@@ -116,7 +116,6 @@ export default function Home() {
       <Navigation
         activeTab={activeTab}
         onTabChange={setActiveTab}
-        onOpenAiChatbot={() => setIsAiChatbotOpen(true)}
         activeRiskCount={riskAlerts.filter(a => !a.isDismissed).length}
       />
 
@@ -194,7 +193,7 @@ export default function Home() {
             <span className="text-emerald-700 font-semibold">PostgreSQL & Deterministic Risk Connected</span>
           </div>
           <span className="font-mono text-[11px] bg-surface-subtle px-2 py-1 rounded border border-border-subtle">
-            v1.3.1 Navigation & Auth Fix
+            v1.3.2 Emerald Tab & Favicon Release
           </span>
         </div>
       </footer>
