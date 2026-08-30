@@ -36,24 +36,35 @@ export const Header: React.FC<HeaderProps> = ({
   const userName = user?.fullName || 'Alex Vance';
   const userEmail = user?.email || 'alex.vance@tradeguard.io';
 
+  const handleBrandLogoClick = () => {
+    window.location.reload();
+  };
+
   return (
     <header className="w-full bg-surface border-b border-border-subtle sticky top-0 z-30 shadow-fin-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        {/* Brand & Account Info */}
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-fin-charcoal text-surface flex items-center justify-center font-semibold text-base shadow-fin-sm border border-slate-700">
+        {/* Brand & Account Info (Clickable logo refreshes app) */}
+        <div
+          onClick={handleBrandLogoClick}
+          className="flex items-center gap-3 cursor-pointer group hover:opacity-95 transition-opacity"
+          title="Click Trade-Guard logo to refresh application"
+        >
+          <div className="h-10 w-10 rounded-xl bg-fin-charcoal text-surface flex items-center justify-center font-semibold text-base shadow-fin-sm border border-slate-700 group-hover:scale-105 transition-transform">
             <ShieldCheck className="w-6 h-6 text-emerald-400" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-fin-charcoal tracking-tight text-base">Trade-Guard</span>
+              <span className="font-bold text-fin-charcoal tracking-tight text-base group-hover:text-emerald-700 transition-colors">
+                Trade-Guard
+              </span>
               <span className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-md border border-emerald-200 font-semibold flex items-center gap-1">
                 <Database className="w-3 h-3 text-emerald-600" /> DB Connected
               </span>
             </div>
             <p className="text-xs text-fin-muted flex items-center gap-1.5">
               <span className="font-medium">{portfolioName}</span>
+              <span className="text-[10px] text-emerald-600 font-semibold hidden sm:inline">(Click logo to refresh)</span>
             </p>
           </div>
         </div>

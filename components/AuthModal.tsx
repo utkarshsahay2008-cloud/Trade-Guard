@@ -137,7 +137,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
         {/* Header */}
         <div className="flex items-center gap-3">
-          <div className="h-11 w-11 rounded-xl bg-fin-charcoal text-surface flex items-center justify-center font-bold shadow-fin-sm">
+          <div className="h-11 w-11 rounded-xl bg-fin-charcoal text-surface flex items-center justify-center font-bold shadow-fin-sm border border-slate-700">
             <ShieldCheck className="w-6 h-6 text-emerald-400" />
           </div>
           <div>
@@ -222,17 +222,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
           {mode === 'REGISTER' && (
             <div>
-              <label className="block font-bold text-fin-muted mb-1">Full Name</label>
-              <div className="flex items-center rounded-xl border border-border bg-surface focus-within:border-slate-700 focus-within:ring-2 focus-within:ring-slate-900/10 overflow-hidden shadow-fin-sm transition-all">
-                <div className="px-3.5 py-2.5 bg-surface-subtle text-fin-muted border-r border-border-subtle flex items-center justify-center flex-shrink-0">
-                  <User className="w-4 h-4 text-fin-muted" />
+              <label className="block font-bold text-fin-muted mb-1 text-xs flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Full Name</span>
+              </label>
+              <div className="flex items-center rounded-xl border border-slate-300 bg-white focus-within:border-slate-800 focus-within:ring-2 focus-within:ring-slate-900/10 overflow-hidden shadow-fin-sm transition-all">
+                <div className="px-3 py-2.5 bg-slate-100 text-slate-600 border-r border-slate-200 flex items-center justify-center flex-shrink-0">
+                  <User className="w-4 h-4 text-slate-600" />
                 </div>
                 <input
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="e.g. Alex Vance"
-                  className="w-full px-3 py-2 text-xs font-semibold text-fin-charcoal bg-transparent focus:outline-none"
+                  style={{ paddingLeft: '12px', paddingRight: '12px' }}
+                  className="w-full py-2.5 text-xs font-semibold text-slate-900 bg-transparent outline-none focus:outline-none"
                   required
                 />
               </div>
@@ -240,40 +244,48 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           )}
 
           <div>
-            <label className="block font-bold text-fin-muted mb-1">Login ID / Email</label>
-            <div className="flex items-center rounded-xl border border-border bg-surface focus-within:border-slate-700 focus-within:ring-2 focus-within:ring-slate-900/10 overflow-hidden shadow-fin-sm transition-all">
-              <div className="px-3.5 py-2.5 bg-surface-subtle text-fin-muted border-r border-border-subtle flex items-center justify-center flex-shrink-0">
-                <Mail className="w-4 h-4 text-fin-muted" />
+            <label className="block font-bold text-fin-muted mb-1 text-xs flex items-center gap-1.5">
+              <Mail className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Login ID / Email</span>
+            </label>
+            <div className="flex items-center rounded-xl border border-slate-300 bg-white focus-within:border-slate-800 focus-within:ring-2 focus-within:ring-slate-900/10 overflow-hidden shadow-fin-sm transition-all">
+              <div className="px-3 py-2.5 bg-slate-100 text-slate-600 border-r border-slate-200 flex items-center justify-center flex-shrink-0">
+                <Mail className="w-4 h-4 text-slate-600" />
               </div>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full px-3 py-2 text-xs font-semibold text-fin-charcoal bg-transparent focus:outline-none"
+                style={{ paddingLeft: '12px', paddingRight: '12px' }}
+                className="w-full py-2.5 text-xs font-semibold text-slate-900 bg-transparent outline-none focus:outline-none"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="block font-bold text-fin-muted mb-1">Password</label>
-            <div className="flex items-center rounded-xl border border-border bg-surface focus-within:border-slate-700 focus-within:ring-2 focus-within:ring-slate-900/10 overflow-hidden shadow-fin-sm transition-all">
-              <div className="px-3.5 py-2.5 bg-surface-subtle text-fin-muted border-r border-border-subtle flex items-center justify-center flex-shrink-0">
-                <KeyRound className="w-4 h-4 text-fin-muted" />
+            <label className="block font-bold text-fin-muted mb-1 text-xs flex items-center gap-1.5">
+              <KeyRound className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Password</span>
+            </label>
+            <div className="flex items-center rounded-xl border border-slate-300 bg-white focus-within:border-slate-800 focus-within:ring-2 focus-within:ring-slate-900/10 overflow-hidden shadow-fin-sm transition-all">
+              <div className="px-3 py-2.5 bg-slate-100 text-slate-600 border-r border-slate-200 flex items-center justify-center flex-shrink-0">
+                <KeyRound className="w-4 h-4 text-slate-600" />
               </div>
               <input
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full px-3 py-2 text-xs font-mono font-semibold text-fin-charcoal bg-transparent focus:outline-none"
+                style={{ paddingLeft: '12px', paddingRight: '12px' }}
+                className="w-full py-2.5 text-xs font-mono font-semibold text-slate-900 bg-transparent outline-none focus:outline-none"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="px-3 py-2 text-fin-muted hover:text-fin-charcoal cursor-pointer flex-shrink-0"
+                className="px-3 py-2.5 text-slate-500 hover:text-slate-900 cursor-pointer flex-shrink-0"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
