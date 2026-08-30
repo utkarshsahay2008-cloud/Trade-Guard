@@ -8,14 +8,14 @@ export async function POST(req: NextRequest) {
 
     if (!email || !email.includes('@')) {
       return NextResponse.json(
-        { success: false, error: 'A valid Login ID / Email is required' },
+        { success: false, error: 'A valid email address is required.' },
         { status: 400 }
       );
     }
 
     if (!password || password.length < 3) {
       return NextResponse.json(
-        { success: false, error: 'Password is required' },
+        { success: false, error: 'Password must be at least 3 characters long.' },
         { status: 400 }
       );
     }
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
       return NextResponse.json({
         success: true,
-        message: 'Account created successfully',
+        message: 'Trader account registered successfully!',
         user: newUser,
         portfolio: store.portfolio,
       });
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Logged in successfully',
+      message: `Welcome back, ${store.user.fullName}!`,
       user: store.user,
       portfolio: store.portfolio,
     });

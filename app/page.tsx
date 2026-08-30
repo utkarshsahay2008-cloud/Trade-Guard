@@ -11,6 +11,7 @@ import { TradingDNACard } from '@/components/TradingDNACard';
 import { TradeJournal } from '@/components/TradeJournal';
 import { AuthModal } from '@/components/AuthModal';
 import { TradeUploadModal } from '@/components/TradeUploadModal';
+import { AIChatbot } from '@/components/AIChatbot';
 import { Portfolio, Position, RiskAlert, User } from '@/lib/database';
 
 export default function Home() {
@@ -23,8 +24,21 @@ export default function Home() {
   const [isResetting, setIsResetting] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [isAiChatbotOpen, setIsAiChatbotOpen] = useState(false);
 
   useEffect(() => {
+    // Check local storage for persistent trader session
+    if (typeof window !== 'undefined') {
+      const savedUserStr = localStorage.getItem('tradeguard_user');
+      if (savedUserStr) {
+        try {
+          const parsedUser = JSON.parse(savedUserStr);
+          setUser(parsedUser);
+        } catch (e) {
+          console.warn('Could not parse stored session user:', e);
+        }
+      }
+    }
     fetchPortfolioData();
   }, []);
 
@@ -37,7 +51,9 @@ export default function Home() {
         setPortfolio(data.portfolio);
         setPositions(data.positions);
         setRiskAlerts(data.riskAlerts);
-        setUser(data.user);
+        if (!user) {
+          setUser(data.user);
+        }
       }
     } catch (e) {
       console.error('Failed to load portfolio data:', e);
@@ -66,23 +82,33 @@ export default function Home() {
     fetchPortfolioData();
   };
 
+  const handleSignOut = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('tradeguard_user');
+    }
+    setUser(null);
+    fetchPortfolioData();
+  };
+
   const handleUploadSuccess = () => {
     fetchPortfolioData();
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-canvas">
+    <div className="min-h-screen flex flex-col bg-canvas font-sans antialiased text-fin-charcoal">
       
       {/* Top Bar Header */}
       <Header
-        userName={user?.fullName || 'Alex Vance'}
-        portfolioName={portfolio?.name || 'Primary Swing & Momentum'}
+        user={user}
+        portfolioName={portfolio?.name || `${user?.fullName || 'Alex Vance'}'s Portfolio`}
         totalBalance={portfolio?.totalBalance || 100000}
         dailyPnl={portfolio?.dailyPnl || -1420}
         maxDrawdownPct={portfolio?.maxDrawdownPct || 8.5}
         onResetSeed={handleResetSeedData}
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
         onOpenUploadModal={() => setIsUploadModalOpen(true)}
+        onOpenAiChatbot={() => setIsAiChatbotOpen(true)}
+        onSignOut={handleSignOut}
         isResetting={isResetting}
       />
 
@@ -94,11 +120,11 @@ export default function Home() {
       />
 
       {/* Main Body Canvas */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {isLoading ? (
-          <div className="py-24 text-center text-fin-muted text-sm flex flex-col items-center gap-3">
-            <div className="w-6 h-6 border-2 border-fin-charcoal border-t-transparent rounded-full animate-spin" />
-            <span>Loading Trade-Guard Risk Engine & Portfolio Data...</span>
+          <div className="py-28 text-center text-fin-muted text-sm flex flex-col items-center gap-3">
+            <div className="w-7 h-7 border-3 border-fin-charcoal border-t-transparent rounded-full animate-spin" />
+            <span className="font-semibold text-fin-charcoal">Loading Trade-Guard Risk Engine & Portfolio Analytics...</span>
           </div>
         ) : (
           <>
@@ -135,6 +161,13 @@ export default function Home() {
         )}
       </main>
 
+      {/* Floating AI Chatbot Assistant Widget */}
+      <AIChatbot
+        isOpen={isAiChatbotOpen}
+        onClose={() => setIsAiChatbotOpen(false)}
+        onOpen={() => setIsAiChatbotOpen(true)}
+      />
+
       {/* Auth Modal */}
       <AuthModal
         isOpen={isAuthModalOpen}
@@ -150,10 +183,16 @@ export default function Home() {
       />
 
       {/* Footer */}
-      <footer className="w-full border-t border-border-subtle bg-surface py-4 text-center text-xs text-fin-muted">
+      <footer className="w-full border-t border-border-subtle bg-surface py-5 text-center text-xs text-fin-muted">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>Trade-Guard Financial Safety & Behavioral Risk System</span>
-          <span className="font-mono text-[11px]">Deterministic Risk, Prediction & Import Engine v1.2.0</span>
+          <div className="flex items-center gap-2 font-medium">
+            <span>Trade-Guard Risk Engine & AI Copilot</span>
+            <span>•</span>
+            <span className="text-emerald-700 font-semibold">PostgreSQL & Deterministic Risk Connected</span>
+          </div>
+          <span className="font-mono text-[11px] bg-surface-subtle px-2 py-1 rounded border border-border-subtle">
+            v1.3.0 LLM Release
+          </span>
         </div>
       </footer>
 
