@@ -42,34 +42,33 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="w-full bg-surface border-b border-border-subtle sticky top-0 z-30 shadow-fin-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        {/* Brand & Account Info (Clickable logo refreshes app) */}
+        {/* Brand & Account Info */}
         <div
           onClick={handleBrandLogoClick}
-          className="flex items-center gap-3 cursor-pointer group hover:opacity-95 transition-opacity"
+          className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group hover:opacity-95 transition-opacity"
           title="Click Trade-Guard logo to refresh application"
         >
-          <div className="h-10 w-10 rounded-xl bg-fin-charcoal text-surface flex items-center justify-center font-semibold text-base shadow-fin-sm border border-slate-700 group-hover:scale-105 transition-transform">
-            <ShieldCheck className="w-6 h-6 text-emerald-400" />
+          <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-fin-charcoal text-surface flex items-center justify-center font-semibold text-base shadow-fin-sm border border-slate-700 group-hover:scale-105 transition-transform flex-shrink-0">
+            <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-fin-charcoal tracking-tight text-base group-hover:text-emerald-700 transition-colors">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="font-bold text-fin-charcoal tracking-tight text-sm sm:text-base group-hover:text-emerald-700 transition-colors">
                 Trade-Guard
               </span>
-              <span className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-md border border-emerald-200 font-semibold flex items-center gap-1">
-                <Database className="w-3 h-3 text-emerald-600" /> DB Connected
+              <span className="text-[9px] sm:text-[10px] bg-emerald-50 text-emerald-700 px-1.5 sm:px-2 py-0.5 rounded-md border border-emerald-200 font-semibold flex items-center gap-1">
+                <Database className="w-2.5 h-2.5 text-emerald-600" /> <span className="hidden xs:inline">DB Connected</span>
               </span>
             </div>
-            <p className="text-xs text-fin-muted flex items-center gap-1.5">
-              <span className="font-medium">{portfolioName}</span>
-              <span className="text-[10px] text-emerald-600 font-semibold hidden sm:inline">(Click logo to refresh)</span>
+            <p className="text-[11px] sm:text-xs text-fin-muted flex items-center gap-1">
+              <span className="font-medium truncate max-w-[120px] sm:max-w-none">{portfolioName}</span>
             </p>
           </div>
         </div>
 
-        {/* Portfolio Realtime Quick Metrics */}
+        {/* Desktop Quick Metrics (lg+) */}
         <div className="hidden lg:flex items-center gap-6 bg-surface-subtle px-4 py-1.5 rounded-xl border border-border-subtle">
           <div className="text-right">
             <div className="text-[10px] text-fin-muted uppercase tracking-wider font-semibold">Total Equity</div>
@@ -97,11 +96,11 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Action Controls & User Dropdown */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {/* AI Assistant Button */}
           <button
             onClick={onOpenAiChatbot}
-            className="fin-badge bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 transition-all cursor-pointer text-xs font-semibold px-3 py-1.5 flex items-center gap-1.5 shadow-fin-sm"
+            className="fin-badge bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 transition-all cursor-pointer text-xs font-semibold px-2.5 sm:px-3 py-1.5 flex items-center gap-1.5 shadow-fin-sm"
             title="Launch LLM AI Copilot Assistant"
           >
             <Bot className="w-4 h-4 text-emerald-600" />
@@ -111,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Upload CSV/JSON Button */}
           <button
             onClick={onOpenUploadModal}
-            className="fin-badge bg-surface-subtle hover:bg-surface-muted text-fin-charcoal border border-border-subtle transition-all cursor-pointer text-xs font-semibold px-3 py-1.5 flex items-center gap-1.5 shadow-fin-sm"
+            className="fin-badge bg-surface-subtle hover:bg-surface-muted text-fin-charcoal border border-border-subtle transition-all cursor-pointer text-xs font-semibold px-2.5 sm:px-3 py-1.5 flex items-center gap-1.5 shadow-fin-sm"
           >
             <Upload className="w-3.5 h-3.5 text-emerald-600" />
             <span className="hidden sm:inline">Import</span>
@@ -121,7 +120,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative">
             <button
               onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-              className="flex items-center gap-2 p-1.5 bg-surface-subtle hover:bg-surface-muted rounded-xl border border-border-subtle transition-all cursor-pointer"
+              className="flex items-center gap-1.5 p-1.5 bg-surface-subtle hover:bg-surface-muted rounded-xl border border-border-subtle transition-all cursor-pointer"
             >
               <div className="h-7 w-7 rounded-lg bg-fin-charcoal text-surface font-bold text-xs flex items-center justify-center border border-slate-700">
                 {userName.charAt(0)}
@@ -185,6 +184,24 @@ export const Header: React.FC<HeaderProps> = ({
 
         </div>
 
+      </div>
+
+      {/* Compact Mobile Quick Stats Strip (< lg screens) */}
+      <div className="lg:hidden bg-surface-subtle border-t border-border-subtle px-3 py-2 flex items-center justify-between text-[11px] font-semibold text-fin-charcoal">
+        <div className="flex items-center gap-1">
+          <span className="text-fin-muted font-normal">Equity:</span>
+          <span className="font-mono font-bold">₹{totalBalance.toLocaleString()}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="text-fin-muted font-normal">P&L:</span>
+          <span className={`font-mono font-bold ${isPnlPositive ? 'text-status-healthy-text' : 'text-status-danger-text'}`}>
+            {isPnlPositive ? '+' : ''}₹{dailyPnl.toLocaleString()}
+          </span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="text-fin-muted font-normal">DD:</span>
+          <span className="font-mono font-bold">{maxDrawdownPct}%</span>
+        </div>
       </div>
     </header>
   );

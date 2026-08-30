@@ -85,7 +85,6 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({
         };
         setMessages((prev) => [...prev, botReply]);
 
-        // Auto-navigate if actionTab is specified
         if (data.actionTab) {
           onTabChange(data.actionTab);
         }
@@ -153,10 +152,10 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({
 
   return (
     <>
-      {/* Floating Action Button (Prominent & High Z-Index) */}
+      {/* Floating Action Button (Mobile & Desktop Responsive) */}
       <button
         onClick={isOpen ? onClose : onOpen}
-        className="fixed bottom-6 right-6 z-50 bg-fin-charcoal hover:bg-slate-800 text-surface p-3.5 rounded-full shadow-2xl transition-all hover:scale-105 cursor-pointer flex items-center gap-2.5 border-2 border-emerald-400 group"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-fin-charcoal hover:bg-slate-800 text-surface p-3.5 rounded-full shadow-2xl transition-all hover:scale-105 cursor-pointer flex items-center gap-2.5 border-2 border-emerald-400 group"
         title="Open Trade-Guard AI Navigator & Assistant"
       >
         <div className="relative">
@@ -164,15 +163,15 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full animate-ping" />
           <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full" />
         </div>
-        <span className="font-bold text-xs pr-1 text-surface tracking-wide">
+        <span className="font-bold text-xs pr-1 text-surface tracking-wide hidden xs:inline">
           AI Copilot & Guide
         </span>
       </button>
 
-      {/* Slide-Up Chat Drawer */}
+      {/* Slide-Up Chat Sheet / Modal */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-end p-2 sm:p-6 bg-slate-900/30 backdrop-blur-xs">
-          <div className="bg-surface rounded-2xl w-full max-w-lg h-[620px] max-h-[92vh] shadow-2xl border border-border-subtle flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-200">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-end p-0 sm:p-6 bg-slate-900/40 backdrop-blur-xs">
+          <div className="bg-surface rounded-t-2xl sm:rounded-2xl w-full max-w-lg h-[88vh] sm:h-[620px] max-h-[92vh] shadow-2xl border border-border-subtle flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-200">
             
             {/* Header */}
             <div className="p-4 bg-fin-charcoal text-surface flex items-center justify-between border-b border-slate-700">
@@ -243,7 +242,7 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({
                     key={t.id}
                     onClick={() => onTabChange(t.id)}
                     className={`px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1 transition-all cursor-pointer whitespace-nowrap ${
-                      isActive ? 'bg-fin-charcoal text-surface font-bold' : 'bg-surface-subtle text-fin-muted hover:text-fin-charcoal'
+                      isActive ? 'bg-emerald-600 text-white font-bold' : 'bg-surface-subtle text-fin-muted hover:text-fin-charcoal'
                     }`}
                   >
                     <Icon className="w-3 h-3" />
@@ -281,7 +280,6 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({
                       <p className="whitespace-pre-wrap font-medium">{msg.content}</p>
                     )}
 
-                    {/* Navigation Action Button inside message if returned by assistant */}
                     {msg.actionTab && (
                       <div className="pt-2 border-t border-border-subtle/50">
                         <button
