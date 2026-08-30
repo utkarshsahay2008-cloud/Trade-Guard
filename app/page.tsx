@@ -19,7 +19,26 @@ export default function Home() {
   const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
   const [positions, setPositions] = useState<Position[]>([]);
   const [riskAlerts, setRiskAlerts] = useState<RiskAlert[]>([]);
-  const [user, setUser] = useState<User | null>(null);
+  
+  // Synchronous client initializer for seamless user persistence (zero Alex Vance flash)
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window !== 'undefined') {
+      const savedUserStr = localStorage.getItem('tradeguard_user');
+      if (savedUserStr) {
+        try {
+          return JSON.parse(savedUserStr);
+        } catch (e) {}
+      }
+    }
+    return {
+      id: 'usr_default',
+      email: 'utkarsh@tradeguard.io',
+      fullName: 'Utkarsh',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+  });
+
   const [isLoading, setIsLoading] = useState(true);
   const [isResetting, setIsResetting] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -27,18 +46,6 @@ export default function Home() {
   const [isAiChatbotOpen, setIsAiChatbotOpen] = useState(false);
 
   useEffect(() => {
-    // Check local storage for persistent trader session
-    if (typeof window !== 'undefined') {
-      const savedUserStr = localStorage.getItem('tradeguard_user');
-      if (savedUserStr) {
-        try {
-          const parsedUser = JSON.parse(savedUserStr);
-          setUser(parsedUser);
-        } catch (e) {
-          console.warn('Could not parse stored session user:', e);
-        }
-      }
-    }
     fetchPortfolioData();
   }, []);
 
@@ -51,7 +58,7 @@ export default function Home() {
         setPortfolio(data.portfolio);
         setPositions(data.positions);
         setRiskAlerts(data.riskAlerts);
-        if (!user) {
+        if (!user || user.fullName === 'Alex Vance') {
           setUser(data.user);
         }
       }
@@ -86,7 +93,14 @@ export default function Home() {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('tradeguard_user');
     }
-    setUser(null);
+    const defaultUser: User = {
+      id: 'usr_default',
+      email: 'utkarsh@tradeguard.io',
+      fullName: 'Utkarsh',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    setUser(defaultUser);
     fetchPortfolioData();
   };
 
@@ -100,7 +114,7 @@ export default function Home() {
       {/* Top Bar Header */}
       <Header
         user={user}
-        portfolioName={portfolio?.name || `${user?.fullName || 'Alex Vance'}'s Portfolio`}
+        portfolioName={portfolio?.name || `${user?.fullName || 'Utkarsh'}'s Portfolio`}
         totalBalance={portfolio?.totalBalance || 100000}
         dailyPnl={portfolio?.dailyPnl || -1420}
         maxDrawdownPct={portfolio?.maxDrawdownPct || 8.5}
@@ -193,7 +207,7 @@ export default function Home() {
             <span className="text-emerald-700 font-semibold">PostgreSQL & Deterministic Risk Connected</span>
           </div>
           <span className="font-mono text-[11px] bg-surface-subtle px-2 py-1 rounded border border-border-subtle">
-            v1.3.2 Emerald Tab & Favicon Release
+            v1.3.3 Profile Fix & Clean Dashboard Release
           </span>
         </div>
       </footer>

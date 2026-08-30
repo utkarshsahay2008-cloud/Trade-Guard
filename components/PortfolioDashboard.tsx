@@ -23,7 +23,6 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
   const [selectedAlert, setSelectedAlert] = useState<RiskAlert | null>(null);
   const [explanation, setExplanation] = useState<StructuredLLMResponse | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [timeframe, setTimeframe] = useState<'1W' | '1M' | '3M' | 'ALL'>('1M');
 
   if (!portfolio) return null;
 
@@ -43,50 +42,16 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
 
   const activeAlerts = riskAlerts.filter(a => !a.isDismissed);
 
-  // Dynamic Equity Curve Generator based on selected timeframe
-  const getEquityCurveData = (tf: '1W' | '1M' | '3M' | 'ALL') => {
-    const currentVal = portfolio.totalBalance;
-    if (tf === '1W') {
-      return [
-        { date: 'Mon 25', balance: currentVal - 4500 },
-        { date: 'Tue 26', balance: currentVal - 2800 },
-        { date: 'Wed 27', balance: currentVal - 3900 },
-        { date: 'Thu 28', balance: currentVal - 1200 },
-        { date: 'Today', balance: currentVal },
-      ];
-    }
-    if (tf === '1M') {
-      return [
-        { date: 'Aug 01', balance: currentVal - 14000 },
-        { date: 'Aug 07', balance: currentVal - 9500 },
-        { date: 'Aug 14', balance: currentVal - 12800 },
-        { date: 'Aug 21', balance: currentVal - 4200 },
-        { date: 'Aug 28', balance: currentVal - 1600 },
-        { date: 'Today', balance: currentVal },
-      ];
-    }
-    if (tf === '3M') {
-      return [
-        { date: 'Jun 01', balance: currentVal - 26000 },
-        { date: 'Jun 15', balance: currentVal - 21000 },
-        { date: 'Jul 01', balance: currentVal - 15000 },
-        { date: 'Jul 15', balance: currentVal - 8500 },
-        { date: 'Aug 01', balance: currentVal - 12000 },
-        { date: 'Today', balance: currentVal },
-      ];
-    }
-    // ALL
-    return [
-      { date: '2025 Q1', balance: 65000 },
-      { date: '2025 Q2', balance: 74000 },
-      { date: '2025 Q3', balance: 82000 },
-      { date: '2025 Q4', balance: 89000 },
-      { date: '2026 Q1', balance: 94000 },
-      { date: 'Today', balance: currentVal },
-    ];
-  };
-
-  const equityCurveData = getEquityCurveData(timeframe);
+  // Cumulative Equity Curve Data
+  const currentVal = portfolio.totalBalance;
+  const equityCurveData = [
+    { date: 'Aug 01', balance: currentVal - 14000 },
+    { date: 'Aug 07', balance: currentVal - 9500 },
+    { date: 'Aug 14', balance: currentVal - 12800 },
+    { date: 'Aug 21', balance: currentVal - 4200 },
+    { date: 'Aug 28', balance: currentVal - 1600 },
+    { date: 'Today', balance: currentVal },
+  ];
 
   // Asset allocation breakdown calculation
   const totalExposure = positions.reduce((sum, p) => sum + (p.quantity * p.currentPrice), 0);
@@ -106,24 +71,6 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
           <p className="text-xs text-fin-muted mt-1">
             Real-time capital tracking, automated position allocation, and multi-factor risk detection
           </p>
-        </div>
-
-        <div className="flex items-center gap-2 self-start md:self-auto">
-          <div className="bg-slate-100 p-1 rounded-xl border border-slate-200 flex text-xs font-semibold">
-            {(['1W', '1M', '3M', 'ALL'] as const).map((tf) => (
-              <button
-                key={tf}
-                onClick={() => setTimeframe(tf)}
-                className={`px-3 py-1 rounded-lg transition-all cursor-pointer font-bold ${
-                  timeframe === tf
-                    ? 'bg-emerald-600 text-white shadow-fin-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
-                }`}
-              >
-                {tf}
-              </button>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -193,9 +140,9 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
             <div>
               <h3 className="font-bold text-fin-charcoal text-base flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-emerald-600" />
-                <span>Account Equity Performance ({timeframe})</span>
+                <span>Account Equity Performance</span>
               </h3>
-              <p className="text-xs text-fin-muted">Cumulative portfolio value growth over time ({timeframe} View)</p>
+              <p className="text-xs text-fin-muted">Cumulative portfolio value growth over time</p>
             </div>
             <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
               +8.0% Total Equity Return
@@ -204,7 +151,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
 
           <div className="h-64 w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart key={timeframe} data={equityCurveData}>
+              <AreaChart data={equityCurveData}>
                 <defs>
                   <linearGradient id="equityGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#10B981" stopOpacity={0.35} />

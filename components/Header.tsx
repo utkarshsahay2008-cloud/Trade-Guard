@@ -33,8 +33,8 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const isPnlPositive = dailyPnl >= 0;
-  const userName = user?.fullName || 'Alex Vance';
-  const userEmail = user?.email || 'alex.vance@tradeguard.io';
+  const userName = user?.fullName || 'Utkarsh';
+  const userEmail = user?.email || 'utkarsh@tradeguard.io';
 
   const handleBrandLogoClick = () => {
     window.location.reload();

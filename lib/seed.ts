@@ -11,8 +11,8 @@ export function getInitialSeedData(): DatabaseStore {
   // 1. Primary Demo User & Profile
   const user: User = {
     id: 'user_demo_01',
-    email: 'trader@tradeguard.io',
-    fullName: 'Alex Vance',
+    email: 'utkarsh@tradeguard.io',
+    fullName: 'Utkarsh',
     createdAt: daysAgo(30),
     updatedAt: daysAgo(1),
   };
@@ -32,7 +32,7 @@ export function getInitialSeedData(): DatabaseStore {
   const portfolio: Portfolio = {
     id: 'port_demo_01',
     userId: user.id,
-    name: 'Primary Swing & Momentum',
+    name: "Utkarsh's Portfolio",
     totalBalance: 100000.0, // ₹1,00,000 starting capital
     availableCash: 64200.0,
     allocatedMargin: 35800.0,
@@ -93,11 +93,7 @@ export function getInitialSeedData(): DatabaseStore {
     }
   ];
 
-  // 5. Realistic Seeded Historical Trades (25 trades showing behavioral sequences)
-  // Historical average quantity: ~20-30 units.
-  // Behavioral Sequence:
-  // Trades 18, 19, 20 are consecutive LOSSES.
-  // Trade 21 was opened 12 mins after Trade 20 with 85 units (2.8x normal size!) -> Clear REVENGE trading!
+  // 5. Realistic Seeded Historical Trades
   const trades: Trade[] = [
     {
       id: 'tr_01',
@@ -327,7 +323,6 @@ export function getInitialSeedData(): DatabaseStore {
       executedAt: daysAgo(5),
       closedAt: daysAgo(4),
     },
-    // --- BEGIN BEHAVIORAL STRESS SEQUENCE (Loss Streak -> Size Spike -> Revenge) ---
     {
       id: 'tr_13_loss1',
       portfolioId: portfolio.id,
@@ -385,24 +380,23 @@ export function getInitialSeedData(): DatabaseStore {
       executedAt: hoursAgo(30),
       closedAt: hoursAgo(28),
     },
-    // REVENGE TRADE: 18 mins after loss3, position size spiked to 75 (3x average)
     {
       id: 'tr_16_revenge',
       portfolioId: portfolio.id,
       symbol: 'RELIANCE',
       assetClass: 'EQUITY',
       direction: 'LONG',
-      quantity: 75, // Huge size escalation right after 3 losses!
+      quantity: 75,
       entryPrice: 2910.0,
       exitPrice: 2870.0,
       stopLoss: 2850.0,
       takeProfit: 3000.0,
       leverage: 4,
-      pnl: -3000.0, // Major loss
+      pnl: -3000.0,
       pnlPct: -1.37,
       status: 'CLOSED',
-      riskScoreAtEntry: 88, // EXTREME RISK
-      executedAt: hoursAgo(27), // 1 hour after previous loss
+      riskScoreAtEntry: 88,
+      executedAt: hoursAgo(27),
       closedAt: hoursAgo(24),
     },
     {
@@ -411,8 +405,8 @@ export function getInitialSeedData(): DatabaseStore {
       symbol: 'BTC/USD',
       assetClass: 'CRYPTO',
       direction: 'LONG',
-      quantity: 0.35, // Size spike at market high
-      entryPrice: 65800.0, // Bought at 24h high!
+      quantity: 0.35,
+      entryPrice: 65800.0,
       exitPrice: 64200.0,
       stopLoss: 63800.0,
       takeProfit: 68000.0,
@@ -445,13 +439,13 @@ export function getInitialSeedData(): DatabaseStore {
     }
   ];
 
-  // 6. Trade Journals (Notes & Emotional States)
+  // 6. Trade Journals
   const journals: TradeJournal[] = [
     {
       id: 'j_01',
       tradeId: 'tr_16_revenge',
       userId: user.id,
-      notes: 'Felt frustrated after 3 losses in a row. Scaled up position size aggressively to double margin hoping to recover lost capital on Reliance breakout.',
+      notes: 'Felt frustrated after 3 losses in a row. Scaled up position size aggressively hoping to recover lost capital.',
       emotionalState: 'REVENGE',
       convictionLevel: 2,
       tags: ['POST_LOSS_SPIKE', 'OVERSIZED', 'REVENGE'],
@@ -520,14 +514,14 @@ export function getInitialSeedData(): DatabaseStore {
     }
   ];
 
-  // 8. Calculated Behavioral Signals (Derived from trade history)
+  // 8. Calculated Behavioral Signals
   const behavioralSignals: BehavioralSignal = {
     id: 'bs_demo_01',
     userId: user.id,
-    revengeScore: 78, // HIGH Revenge score due to post-loss size spike in trade 16!
-    fomoScore: 64, // MODERATE-HIGH FOMO score due to chase entry in trade 17!
+    revengeScore: 78,
+    fomoScore: 64,
     overtradingScore: 42,
-    riskEscalationScore: 82, // HIGH size escalation during drawdown!
+    riskEscalationScore: 82,
     positionAnomalyScore: 75,
     primaryArchetype: 'Drawdown Escalator',
     dominantTrigger: 'Size escalation immediately following consecutive loss trades',

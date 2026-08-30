@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ShieldCheck, Mail, User, X, KeyRound, ArrowRight, CheckCircle2, AlertCircle, Eye, EyeOff, Sparkles, LogIn } from 'lucide-react';
+import { ShieldCheck, Mail, User, X, KeyRound, ArrowRight, CheckCircle2, AlertCircle, Eye, EyeOff, Sparkles } from 'lucide-react';
 import { User as UserModel } from '@/lib/database';
 
 interface AuthModalProps {
@@ -16,9 +16,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onLoginSuccess,
 }) => {
   const [mode, setMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
-  const [email, setEmail] = useState('alex.vance@tradeguard.io');
+  const [email, setEmail] = useState('utkarsh@tradeguard.io');
   const [password, setPassword] = useState('password123');
-  const [fullName, setFullName] = useState('Alex Vance');
+  const [fullName, setFullName] = useState('Utkarsh');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -30,14 +30,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setMode(newMode);
     setErrorMsg('');
     setSuccessMsg('');
-    if (newMode === 'REGISTER' && email === 'alex.vance@tradeguard.io') {
+    if (newMode === 'REGISTER' && email === 'utkarsh@tradeguard.io') {
       setEmail('');
       setPassword('');
       setFullName('');
     } else if (newMode === 'LOGIN' && !email) {
-      setEmail('alex.vance@tradeguard.io');
+      setEmail('utkarsh@tradeguard.io');
       setPassword('password123');
-      setFullName('Alex Vance');
+      setFullName('Utkarsh');
     }
   };
 
@@ -105,7 +105,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       const socialUser: UserModel = {
         id: `usr_${provider.toLowerCase()}_${Date.now()}`,
         email: `trader@${provider.toLowerCase()}.com`,
-        fullName: `${provider} Trader`,
+        fullName: `Utkarsh (${provider})`,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
@@ -125,7 +125,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4 animate-in fade-in duration-150">
-      <div className="bg-surface rounded-2xl max-w-md w-full p-6 shadow-2xl border border-border-subtle space-y-5 relative">
+      <div className="bg-surface rounded-2xl max-w-md w-full p-6 shadow-2xl border border-border-subtle space-y-5 relative max-h-[92vh] overflow-y-auto">
         
         {/* Close Button */}
         <button
@@ -234,7 +234,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="e.g. Alex Vance"
+                  placeholder="e.g. Utkarsh"
                   style={{ paddingLeft: '12px', paddingRight: '12px' }}
                   className="w-full py-2.5 text-xs font-semibold text-slate-900 bg-transparent outline-none focus:outline-none"
                   required
@@ -256,7 +256,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder="utkarsh@tradeguard.io"
                 style={{ paddingLeft: '12px', paddingRight: '12px' }}
                 className="w-full py-2.5 text-xs font-semibold text-slate-900 bg-transparent outline-none focus:outline-none"
                 required
@@ -312,10 +312,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
-                onClick={() => useDemoUser('Alex Vance', 'alex.vance@tradeguard.io')}
+                onClick={() => useDemoUser('Utkarsh', 'utkarsh@tradeguard.io')}
                 className="p-2.5 rounded-xl bg-surface-subtle hover:bg-surface-muted border border-border-subtle text-left transition-all cursor-pointer shadow-fin-sm"
               >
-                <div className="font-bold text-fin-charcoal text-[11px]">Alex Vance</div>
+                <div className="font-bold text-fin-charcoal text-[11px]">Utkarsh</div>
                 <div className="text-[10px] text-fin-muted truncate font-medium">Pro Swing Trader</div>
               </button>
               <button
