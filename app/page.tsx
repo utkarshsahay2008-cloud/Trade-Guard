@@ -116,6 +116,7 @@ export default function Home() {
       <Navigation
         activeTab={activeTab}
         onTabChange={setActiveTab}
+        onOpenAiChatbot={() => setIsAiChatbotOpen(true)}
         activeRiskCount={riskAlerts.filter(a => !a.isDismissed).length}
       />
 
@@ -161,11 +162,13 @@ export default function Home() {
         )}
       </main>
 
-      {/* Floating AI Chatbot Assistant Widget */}
+      {/* Floating AI Chatbot Assistant & Navigator Widget */}
       <AIChatbot
         isOpen={isAiChatbotOpen}
         onClose={() => setIsAiChatbotOpen(false)}
         onOpen={() => setIsAiChatbotOpen(true)}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
       />
 
       {/* Auth Modal */}
@@ -191,7 +194,7 @@ export default function Home() {
             <span className="text-emerald-700 font-semibold">PostgreSQL & Deterministic Risk Connected</span>
           </div>
           <span className="font-mono text-[11px] bg-surface-subtle px-2 py-1 rounded border border-border-subtle">
-            v1.3.0 LLM Release
+            v1.3.1 Navigation & Auth Fix
           </span>
         </div>
       </footer>
