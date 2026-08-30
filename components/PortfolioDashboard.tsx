@@ -48,37 +48,41 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
     const currentVal = portfolio.totalBalance;
     if (tf === '1W') {
       return [
-        { date: 'Mon', balance: currentVal - 1400, pnl: -600 },
-        { date: 'Tue', balance: currentVal - 2200, pnl: -800 },
-        { date: 'Wed', balance: currentVal - 900, pnl: 1300 },
-        { date: 'Thu', balance: currentVal - 1420, pnl: -520 },
-        { date: 'Fri', balance: currentVal, pnl: portfolio.dailyPnl },
+        { date: 'Mon 25', balance: currentVal - 4500 },
+        { date: 'Tue 26', balance: currentVal - 2800 },
+        { date: 'Wed 27', balance: currentVal - 3900 },
+        { date: 'Thu 28', balance: currentVal - 1200 },
+        { date: 'Today', balance: currentVal },
       ];
     }
     if (tf === '1M') {
       return [
-        { date: 'Aug 01', balance: currentVal - 8000, pnl: -800 },
-        { date: 'Aug 05', balance: currentVal - 5500, pnl: 2500 },
-        { date: 'Aug 10', balance: currentVal - 6800, pnl: -1300 },
-        { date: 'Aug 15', balance: currentVal - 2200, pnl: 4600 },
-        { date: 'Aug 20', balance: currentVal - 3900, pnl: -1700 },
-        { date: 'Aug 25', balance: currentVal - 600, pnl: 3300 },
-        { date: 'Aug 30', balance: currentVal, pnl: portfolio.dailyPnl },
+        { date: 'Aug 01', balance: currentVal - 14000 },
+        { date: 'Aug 07', balance: currentVal - 9500 },
+        { date: 'Aug 14', balance: currentVal - 12800 },
+        { date: 'Aug 21', balance: currentVal - 4200 },
+        { date: 'Aug 28', balance: currentVal - 1600 },
+        { date: 'Today', balance: currentVal },
       ];
     }
     if (tf === '3M') {
       return [
-        { date: 'Jun', balance: currentVal - 18000, pnl: 3200 },
-        { date: 'Jul', balance: currentVal - 10000, pnl: 8000 },
-        { date: 'Aug', balance: currentVal, pnl: portfolio.dailyPnl },
+        { date: 'Jun 01', balance: currentVal - 26000 },
+        { date: 'Jun 15', balance: currentVal - 21000 },
+        { date: 'Jul 01', balance: currentVal - 15000 },
+        { date: 'Jul 15', balance: currentVal - 8500 },
+        { date: 'Aug 01', balance: currentVal - 12000 },
+        { date: 'Today', balance: currentVal },
       ];
     }
     // ALL
     return [
-      { date: 'Q1', balance: 80000, pnl: 5000 },
-      { date: 'Q2', balance: 88000, pnl: 8000 },
-      { date: 'Q3', balance: currentVal - 5000, pnl: 7000 },
-      { date: 'Current', balance: currentVal, pnl: portfolio.dailyPnl },
+      { date: '2025 Q1', balance: 65000 },
+      { date: '2025 Q2', balance: 74000 },
+      { date: '2025 Q3', balance: 82000 },
+      { date: '2025 Q4', balance: 89000 },
+      { date: '2026 Q1', balance: 94000 },
+      { date: 'Today', balance: currentVal },
     ];
   };
 
@@ -191,7 +195,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
                 <TrendingUp className="w-4 h-4 text-emerald-600" />
                 <span>Account Equity Performance ({timeframe})</span>
               </h3>
-              <p className="text-xs text-fin-muted">Cumulative portfolio value growth over time</p>
+              <p className="text-xs text-fin-muted">Cumulative portfolio value growth over time ({timeframe} View)</p>
             </div>
             <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
               +8.0% Total Equity Return
@@ -200,7 +204,7 @@ export const PortfolioDashboard: React.FC<PortfolioDashboardProps> = ({
 
           <div className="h-64 w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={equityCurveData}>
+              <AreaChart key={timeframe} data={equityCurveData}>
                 <defs>
                   <linearGradient id="equityGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#10B981" stopOpacity={0.35} />
